@@ -1,7 +1,3 @@
-# https://github.com/pomber/covid19
-#! Will need to make this a Flask/Django project to host online
-#! https://stackabuse.com/deploying-a-flask-application-to-heroku/
-
 import folium, requests, json, csv, math
 from flask import Flask, render_template
 
