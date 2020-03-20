@@ -22,8 +22,6 @@ info = requests.get("https://pomber.github.io/covid19/timeseries.json")
 cases = json.loads(info.text)
 
 countries = []
-radiusList = []
-colorList = []
 
 for case in cases:
     confirmed = cases[case][-1]['confirmed']
@@ -34,42 +32,31 @@ for case in cases:
         if not confirmed == 0:
             lat = latlon[latlon.index(case) + 1]
             lon = latlon[latlon.index(case) + 2]
+
+            smallSize = 10 # Plateau small countries
+            bigSize = -1/10000 # Plateau big countries
             radius = confirmed
-            # 0 1 2 3 4 5 6 7 8 9 A B C D E F
+            # Sigmoid function to get proper circle radius
+            radius = (1/(1 + smallSize * math.exp(bigSize * radius))) * 1000000
+
+            lowMortality = 1/50 # Plateau low mortality rates
             color = int((deaths / confirmed) * 100)
-            # print(case, color, int((deaths / confirmed) * 100), '%')
+            # Sigmoid function to get a red RGB value
+            sigmoid = int((1/(1 + lowMortality * math.exp(-1/10 * color + 5))) * 255)
+            # Convert red RGB to hex
+            color = '#{:02x}{:02x}{:02x}'.format(sigmoid, 0, 0)
 
-            radiusList.append(radius)
-            colorList.append(color)
-            countries.append([lat, lon, case, confirmed, deaths])
-
-# Normalize radius values
-sigmoidRadii = []
-for x in range(len(radiusList)):
-    smallSize = 10 # Plateau small countries
-    bigSize = -1/10000 # Plateau big countries
-
-    sigmoidRadii.append((1/(1 + smallSize * math.exp(bigSize * radiusList[x]))) * 1000000)
-
-sigmoidColors = []
-# Normalize color values
-for x in range(len(colorList)):
-    lowMortality = 1/50
-    sigmoid = int((1/(1 + lowMortality * math.exp(-1/10 * colorList[x] + 5))) * 255)
-    color = '#{:02x}{:02x}{:02x}'.format(sigmoid, 0, 0)
-    print(sigmoid, color)
-    sigmoidColors.append(color)
+            countries.append([lat, lon, case, confirmed, deaths, radius, color])
 
 for country in countries:
     folium.Circle(
         location=[country[0], country[1]],
-        radius=sigmoidRadii[countries.index(country)],
+        radius=country[5],
         popup=f'{country[2]}: {country[3]}, {country[4]}, {round(country[4]/country[3]*100, 3)}%',
-        color=sigmoidColors[countries.index(country)],
+        color=country[6],
         fill=True,
-        fill_color=sigmoidColors[countries.index(country)],
+        fill_color=country[6],
         fill_opacity=.5
     ).add_to(m)
-
 
 m.save(outfile='index.html')
