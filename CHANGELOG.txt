@@ -1,0 +1,6 @@
+1.0.1
+Added different view modes
+(allow the circles to switch to mortality rates)
+
+1.0.0
+Initial commit

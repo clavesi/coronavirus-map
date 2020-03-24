@@ -37,9 +37,9 @@
 "BZ","Belize",17.25,-88.75
 "CA","Canada",60,-95
 "CC","Cocos (Keeling) Islands",-12.5,96.83
-"CD","Congo, The Democratic Republic of the",0,25
+"CD","Congo (Kinshasa)",0,25
 "CF","Central African Republic",7,21
-"CG","Congo",-1,15
+"CG","Congo (Brazzaville)",-1,15
 "CH","Switzerland",47,8
 "CI","Cote d'Ivoire",8,-5
 "CK","Cook Islands",-21.23,-159.77
@@ -111,8 +111,7 @@
 "KI","Kiribati",1.42,173
 "KM","Comoros",-12.17,44.25
 "KN","Saint Kitts and Nevis",17.33,-62.75
-"KP","Korea, Democratic People's Republic of",40,127
-"KR","Korea, Republic of",37,127.5
+"KR","Korea, South",37,127.5
 "KW","Kuwait",29.34,47.66
 "KY","Cayman Islands",19.5,-80.5
 "KZ","Kazakhstan",48,68
@@ -126,10 +125,10 @@
 "LT","Lithuania",56,24
 "LU","Luxembourg",49.75,6.17
 "LV","Latvia",57,25
-"LY","Libyan Arab Jamahiriya",25,17
+"LY","Libya",25,17
 "MA","Morocco",32,-5
 "MC","Monaco",43.73,7.4
-"MD","Moldova, Republic of",47,29
+"MD","Moldova",47,29
 "ME","Montenegro",42,19
 "MG","Madagascar",-20,47
 "MH","Marshall Islands",9,168
@@ -178,7 +177,7 @@
 "RE","Reunion",-21.1,55.6
 "RO","Romania",46,25
 "RS","Serbia",44,21
-"RU","Russian Federation",60,100
+"RU","Russia",60,100
 "RW","Rwanda",-2,30
 "SA","Saudi Arabia",25,45
 "SB","Solomon Islands",-8,159
@@ -197,8 +196,8 @@
 "SR","Suriname",4,-56
 "ST","Sao Tome and Principe",1,7
 "SV","El Salvador",13.83,-88.92
-"SY","Syrian Arab Republic",35,38
-"SZ","Swaziland",-26.5,31.5
+"SY","Syria",35,38
+"SZ","Eswatini",-26.5,31.5
 "TC","Turks and Caicos Islands",21.75,-71.58
 "TD","Chad",15,19
 "TF","French Southern Territories",-43,67
@@ -212,8 +211,8 @@
 "TR","Turkey",39,35
 "TT","Trinidad and Tobago",11,-61
 "TV","Tuvalu",-8,178
-"TW","Taiwan",23.5,121
-"TZ","Tanzania, United Republic of",-6,35
+"TW","Taiwan*",23.5,121
+"TZ","Tanzania",-6,35
 "UA","Ukraine",49,32
 "UG","Uganda",1,32
 "UM","United States Minor Outlying Islands",19.28,166.6
