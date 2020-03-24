@@ -1,6 +1,5 @@
 1.0.1
-Added different view modes
-(allow the circles to switch to mortality rates)
+Updated nation names in natlatlon.csv
 
 1.0.0
 Initial commit
