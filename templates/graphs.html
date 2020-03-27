@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graphs</title>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js'></script>
 </head>
 <body>
     <nav>
@@ -42,5 +43,31 @@
            font-size: 36px;
         }
     </style>
+
+    <canvas id="myChart" width="400" height="400"></canvas>
+
+    <script>
+        var days = {{ days | tojson }};
+        var cases = {{ cases | tojson}};
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: days,
+                datasets: [{ 
+                    data: cases,
+                    label: "Cases",
+                    borderColor: "#3e95cd",
+                    fill: false}]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'COVID-19 Cases'
+                }
+            }
+        });
+    </script>
 </body>
 </html>
