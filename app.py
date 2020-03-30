@@ -125,15 +125,4 @@ def graphs():
     info = requests.get("https://pomber.github.io/covid19/timeseries.json")
     covid19 = json.loads(info.text)
 
-    totalDays = len(covid19['Afghanistan'])
-    days = []
-    cases = []
-    for x in range(1, totalDays+1):
-        days.append(x)
-
-        casesDaily = 0
-        for case in covid19:
-            casesDaily += covid19[case][x-1]['confirmed']
-        cases.append(casesDaily)
-
-    return render_template('graphs.html', days=days, cases=cases)
+    return render_template('graphs.html', data=covid19)
