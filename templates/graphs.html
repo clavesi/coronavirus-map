@@ -63,8 +63,8 @@
         totalDays = data['Afghanistan'].length;
         days = [];
         cases = [];
-        for (i = 1; i < totalDays; i++) {
-            days.push(i);
+        for (i = 0; i < totalDays; i++) {
+            days.push(i+1);
 
             // Get number of cases worldwide
             casesDaily = 0;
@@ -94,8 +94,30 @@
         });
 
         function changeDataset() {
-            console.log(select.value);
-            console.log(select.value, data[select.value]);
+            myChart.destroy();
+
+            const countryCases = []
+            for (i = 0; i < data[select.value].length; i ++) {
+                countryCases.push(data[select.value][i]['confirmed']);
+            }
+
+            myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: days,
+                datasets: [{ 
+                    data: countryCases,
+                    label: "Cases",
+                    borderColor: "#3e95cd",
+                    fill: false}]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'COVID-19 Cases'
+                }
+            }
+        });
         }
     </script>
 </body>
