@@ -8,4 +8,6 @@ An up-to-date view can be found [here](https://coronavirus-map-with-circles.hero
 ## How It Works
 The python script accesses another [repository by pomber](https://github.com/pomber/covid19) to get the current number of cases and a csv file to get the latitutde and longitude of each country. After that, it uses the [folium](https://python-visualization.github.io/folium/) library to map it all.
 
+Another page is the graphs page, where you can see the number of cases in every country or worldwide.
+
 ![](img/showcase.PNG)
