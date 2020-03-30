@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+</head>
+<body>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/">Visualize COVID-19</a></li>
+            <li><a href="/map">Map</a></li>
+            <li><a href="/graphs">Graphs</a></li>
+        </ul>
+    </nav>
+
+    <footer>Designed by clavesi</footer>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        nav {
+            height: 100vh;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            width: 100%;
+            height: 100%;
+            background: lightcoral;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .nav-links li a {
+           color: white;
+           text-decoration: none;
+           font-size: 36px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 36px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    </style>
+</body>
+</html>

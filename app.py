@@ -4,11 +4,16 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/map')
 def coronavirusMap():
     m = folium.Map(
         location=[0, 0],
         tiles='OpenStreetMap',
-        zoom_start=2
+        zoom_start=2,
+        height="95%"
     )
 
     latlon = []
@@ -60,6 +65,64 @@ def coronavirusMap():
             fill_opacity=.5
         ).add_to(m)
 
-    m.save(outfile='templates/index.html')
+    m.save(outfile='templates/map.html')
 
-    return render_template('index.html')
+    # Read map.html and save a variable that has the header added
+    f = open("templates/map.html", "r")
+    text = f.read()
+    if '<body>' in text:
+        bodyIndex = text.index('<body>') + 6
+        htmlText = '''
+                    <nav>
+                        <ul class="nav-links">
+                            <li><a href="/">Visualize COVID-19</a></li>
+                            <li><a href="/map">Map</a></li>
+                            <li><a href="/graphs">Graphs</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <style>
+                        * {
+                            margin: 0;
+                            padding: 0;
+                            box-sizing: border-box;
+                        }
+
+                        nav {
+                            height: 5vh;
+                        }
+
+                        .nav-links {
+                            display: flex;
+                            list-style: none;
+                            width: 100%;
+                            height: 100%;
+                            background: lightcoral;
+                            justify-content: space-around;
+                            align-items: center;
+                            flex-direction: row;
+                        }
+
+                        .nav-links li a {
+                        color: white;
+                        text-decoration: none;
+                        font-size: 36px;
+                        }
+                    </style>
+                    '''
+        finalText = text[:bodyIndex] + htmlText + text[bodyIndex:]
+    f.close()
+
+    # Write variable to file
+    f = open("templates/map.html", "w")
+    f.write(finalText)
+    f.close()
+
+    return render_template('map.html')
+
+@app.route('/graphs')
+def graphs():
+    info = requests.get("https://pomber.github.io/covid19/timeseries.json")
+    covid19 = json.loads(info.text)
+
+    return render_template('graphs.html', data=covid19)
