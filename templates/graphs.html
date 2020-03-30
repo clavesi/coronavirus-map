@@ -100,32 +100,52 @@
             }
         });
 
-        // TODO Crashes when you go back to Worldwide
         function changeDataset() {
             myChart.destroy();
 
-            const countryCases = []
-            for (i = 0; i < data[select.value].length; i ++) {
-                countryCases.push(data[select.value][i]['confirmed']);
-            }
-
-            myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: days,
-                datasets: [{ 
-                    data: countryCases,
-                    label: "Cases",
-                    borderColor: "#3e95cd",
-                    fill: false}]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'COVID-19 Cases'
+            if (select.value !== 'Worldwide') {
+                const countryCases = []
+                for (i = 0; i < data[select.value].length; i ++) {
+                    countryCases.push(data[select.value][i]['confirmed']);
                 }
+
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: days,
+                        datasets: [{ 
+                            data: countryCases,
+                            label: "Cases",
+                            borderColor: "#3e95cd",
+                            fill: false}]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'COVID-19 Cases'
+                        }
+                    }
+                });
+            } else {
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: days,
+                        datasets: [{ 
+                            data: cases,
+                            label: "Cases",
+                            borderColor: "#3e95cd",
+                            fill: false}]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'COVID-19 Cases'
+                        }
+                    }
+                });
             }
-        });
+            
         }
     </script>
 </body>
