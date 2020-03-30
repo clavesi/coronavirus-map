@@ -15,9 +15,12 @@
         </ul>
     </nav>
 
-    <select id='countrySelect' onchange="changeDataset()">
-        <option value="Worldwide" selected>Worldwide</option>
-    </select>
+    <div class="selection" align="center">
+        <select id='countrySelect' onchange="changeDataset()">
+            <option value="Worldwide" selected>Worldwide</option>
+        </select>
+    </div>
+    
 
     <style>
         * {
@@ -45,6 +48,10 @@
            color: white;
            text-decoration: none;
            font-size: 36px;
+        }
+
+        select {
+            text-align: center;
         }
     </style>
 
@@ -93,6 +100,7 @@
             }
         });
 
+        // TODO Crashes when you go back to Worldwide
         function changeDataset() {
             myChart.destroy();
 
