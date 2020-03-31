@@ -20,7 +20,6 @@
             <option value="Worldwide" selected>Worldwide</option>
         </select>
     </div>
-    
 
     <style>
         * {
@@ -53,9 +52,18 @@
         select {
             text-align: center;
         }
+
+        footer {
+            text-align: center;
+            font-size: 36px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
     </style>
 
     <canvas id="myChart"></canvas>
+
+    <footer><a style="text-decoration: none" href="https://github.com/clavesi/coronavirus-map">Designed by clavesi</a></footer>
 
     <script>
         let data = {{ data | tojson }};
