@@ -1,8 +1,0 @@
-1.1.0
-Added home page and graphs page
-
-1.0.1
-Updated nation names in natlatlon.csv
-
-1.0.0
-Initial commit
