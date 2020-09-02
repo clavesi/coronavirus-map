@@ -1,6 +1,21 @@
 import folium, requests, json, csv, math
 from flask import Flask, render_template
 
+'''
+Check the .csv and .json to make sure they match
+Again, fix colors and circle size, maybe finally implement per capita with a population csv, 
+    but that would be another thing to keep the same
+When the per capita is implemented, the formula for size should hopefully be a bit easier to 
+    do. Perhaps there is some way to change size differences based on location on the map. 
+    There has to be some calculation for Mercator Projection.
+python-visualization.github.io/folium/modules.html - CTRL + F "projection"
+Comes down to either the Equirectangular projection (en.wikipedia.org/wiki/Equirectangular_projection) 
+    or Web Mercator projection (en.wikipedia.org/wiki/Web_Mercator_projection)
+Fix fonts, currently only the map page has them
+Fix headers, the "Visualize COVID-19" is causing it's box to be longer
+Adjust README.fr
+'''
+
 app = Flask(__name__)
 
 @app.route('/')
