@@ -89,35 +89,7 @@ def coronavirusMap():
                             <li><a href="/graphs">Graphs</a></li>
                         </ul>
                     </nav>
-                    
-                    <style>
-                        * {
-                            margin: 0;
-                            padding: 0;
-                            box-sizing: border-box;
-                        }
-
-                        nav {
-                            height: 5vh;
-                        }
-
-                        .nav-links {
-                            display: flex;
-                            list-style: none;
-                            width: 100%;
-                            height: 100%;
-                            background: lightcoral;
-                            justify-content: space-around;
-                            align-items: center;
-                            flex-direction: row;
-                        }
-
-                        .nav-links li a {
-                        color: white;
-                        text-decoration: none;
-                        font-size: 36px;
-                        }
-                    </style>
+                    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/map.css') }}">
                     '''
         finalText = text[:bodyIndex] + htmlText + text[bodyIndex:]
     f.close()

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graphs</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/graphs.css') }}">
 </head>
+
 <body>
     <nav>
         <ul class="nav-links">
@@ -15,55 +18,19 @@
         </ul>
     </nav>
 
+    <h1>Starting at January 22, 2020</h1>
+
     <div class="selection" align="center">
         <select id='countrySelect' onchange="changeDataset()">
             <option value="Worldwide" selected>Worldwide</option>
         </select>
     </div>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        nav {
-            height: 5vh;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            width: 100%;
-            height: 100%;
-            background: lightcoral;
-            justify-content: space-around;
-            align-items: center;
-            flex-direction: row;
-        }
-
-        .nav-links li a {
-           color: white;
-           text-decoration: none;
-           font-size: 36px;
-        }
-
-        select {
-            text-align: center;
-        }
-
-        footer {
-            text-align: center;
-            font-size: 36px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-    </style>
-
     <canvas id="myChart"></canvas>
 
-    <footer><a style="text-decoration: none" href="https://github.com/clavesi/coronavirus-map">Designed by clavesi</a></footer>
+    <footer>
+        <a href="https://github.com/clavesi/coronavirus-map">Designed by clavesi</a>
+    </footer>
 
     <script>
         let data = {{ data | tojson }};
@@ -79,33 +46,75 @@
         days = [];
         cases = [];
         for (i = 0; i < totalDays; i++) {
-            days.push(i+1);
+            days.push(i + 1);
 
             // Get number of cases worldwide
             casesDaily = 0;
             for (c in data) {
-                 casesDaily += data[c][i]['confirmed'];
+                casesDaily += data[c][i]['confirmed'];
             }
             cases.push(casesDaily);
         }
-            
+
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: days,
-                datasets: [{ 
+                datasets: [{
                     data: cases,
                     label: "Cases",
-                    borderColor: "#3e95cd",
-                    fill: false}]
+                    borderColor: "lightcoral",
+                    fill: true
+                }]
             },
             options: {
                 title: {
                     display: true,
-                    text: 'COVID-19 Cases'
+                    text: 'Cases'
+                },
+                elements: {
+                    point: {
+                        radius: 2
+                    }
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var value = data.datasets[0].data[tooltipItem.index];
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join(',');
+                            return value;
+                        }
+                    } // end callbacks:
+                }, //end tooltips
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            userCallback: function (value, index, values) {
+                                // Add commas
+                                value = value.toString();
+                                value = value.split(/(?=(?:...)*$)/);
+                                value = value.join(',');
+                                return value;
+                            }
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            userCallback: function (value, index, values) {
+                                // Add commas
+                                value = value.toString();
+                                value = value.split(/(?=(?:...)*$)/);
+                                value = value.join(',');
+                                return value;
+                            }
+                        }
+                    }]
                 }
-            }
+            },
         });
 
         function changeDataset() {
@@ -113,7 +122,7 @@
 
             if (select.value !== 'Worldwide') {
                 const countryCases = []
-                for (i = 0; i < data[select.value].length; i ++) {
+                for (i = 0; i < data[select.value].length; i++) {
                     countryCases.push(data[select.value][i]['confirmed']);
                 }
 
@@ -121,11 +130,12 @@
                     type: 'line',
                     data: {
                         labels: days,
-                        datasets: [{ 
+                        datasets: [{
                             data: countryCases,
                             label: "Cases",
                             borderColor: "#3e95cd",
-                            fill: false}]
+                            fill: false
+                        }]
                     },
                     options: {
                         title: {
@@ -139,11 +149,12 @@
                     type: 'line',
                     data: {
                         labels: days,
-                        datasets: [{ 
+                        datasets: [{
                             data: cases,
                             label: "Cases",
                             borderColor: "#3e95cd",
-                            fill: false}]
+                            fill: false
+                        }]
                     },
                     options: {
                         title: {
@@ -153,8 +164,9 @@
                     }
                 });
             }
-            
+
         }
     </script>
 </body>
+
 </html>
