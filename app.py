@@ -6,10 +6,8 @@ Again, fix colors and circle size, maybe finally implement per capita with a pop
     but that would be another thing to keep the same
 When the per capita is implemented, the formula for size should hopefully be a bit easier to 
     do. Perhaps there is some way to change size differences based on location on the map. 
-    There has to be some calculation for Mercator Projection.
-python-visualization.github.io/folium/modules.html - CTRL + F "projection"
-Comes down to either the Equirectangular projection (en.wikipedia.org/wiki/Equirectangular_projection) 
-    or Web Mercator projection (en.wikipedia.org/wiki/Web_Mercator_projection)
+    There has to be some calculation for Spherical Mercator Projection.
+(Cases / Population) * 100,000
 Fix fonts, currently only the map page has them
 Fix headers, the "Visualize COVID-19" is causing it's box to be longer
 Adjust README.fr
@@ -27,7 +25,7 @@ def coronavirusMap():
         location=[0, 0],
         tiles='OpenStreetMap',
         zoom_start=2,
-        height="95%"
+        height="95%",
     )
 
     latlon = []
@@ -37,17 +35,31 @@ def coronavirusMap():
             latlon.append(row['Country'])
             latlon.append(row['Latitude'])
             latlon.append(row['Longitude'])
+    
+    pop = []
+    with open('natpop2020.csv', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            pop.append(row['Country'])
+            pop.append(row['Population'])
 
     info = requests.get("https://pomber.github.io/covid19/timeseries.json")
     cases = json.loads(info.text)
 
     confirmedCasesList = []
     ratesList = []
+    percapitaList = []
     countries = []
+
+    # This is separate because the second loop requires the max
+    # value of the list in this loop
     for case in cases:
         confirmedCasesList.append(cases[case][-1]['confirmed'])
         ratesList.append(cases[case][-1]['deaths'] / cases[case][-1]['confirmed'])
+        if case in latlon:
+            percapitaList.append((cases[case][-1]['confirmed'] / int(pop[pop.index(case) + 1])) * 100000)
 
+    for case in cases:
         confirmed = cases[case][-1]['confirmed']
         deaths = cases[case][-1]['deaths']
         recovered = cases[case][-1]['recovered']
@@ -56,12 +68,14 @@ def coronavirusMap():
             if not confirmed == 0:
                 lat = latlon[latlon.index(case) + 1]
                 lon = latlon[latlon.index(case) + 2]
+                population = int(pop[pop.index(case) + 1])
+                percapita = (confirmed / population) * 100000
 
                 smallSize = 10 # Plateau small countries
-                bigSize = -1 / (max(confirmedCasesList) * .01) # Plateau big countries
-                radius = confirmed
+                bigSize = -1 / (max(percapitaList) * .01) # Plateau big countries
+                radius = percapita
                 # Sigmoid function to get proper circle radius
-                radius = (1/(1 + smallSize * math.exp(bigSize * radius))) * 1000000
+                radius = (1/(1 + smallSize * math.exp(bigSize * radius))) * 250000
 
                 lowMortality = 1/100 # Plateau low mortality rates
                 color = int((deaths / confirmed) * 100)
@@ -70,19 +84,19 @@ def coronavirusMap():
                 # Convert red RGB to hex
                 color = '#{:02x}{:02x}{:02x}'.format(sigmoid, 0, 0)
 
-                countries.append([lat, lon, case, confirmed, deaths, radius, color])
+                countries.append([lat, lon, case, confirmed, deaths, radius, color, percapita])
 
     for country in countries:
-        folium.Circle(
+        popup = folium.Popup(f'{country[2]}:<br>{country[3]} cases,<br>{round(country[7], 2)} per 100k,<br>{country[4]} deaths,<br>{round(country[4]/country[3]*100, 2)}% mortality', max_width=1500)
+        circle = folium.Circle(
             location=[country[0], country[1]],
             radius=country[5],
-            popup=f'{country[2]}: {country[3]}, {country[4]}, {round(country[4]/country[3]*100, 3)}%',
+            popup=popup,
             color=country[6],
             fill=True,
             fill_color=country[6],
             fill_opacity=.3
         ).add_to(m)
-
     m.save(outfile='templates/map.html')
 
     # Read map.html and save a variable that has the header added
