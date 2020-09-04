@@ -2,7 +2,6 @@ import folium, requests, json, csv, math
 from flask import Flask, render_template
 
 '''
-Check the .csv and .json to make sure they match
 Again, fix colors and circle size, maybe finally implement per capita with a population csv, 
     but that would be another thing to keep the same
 When the per capita is implemented, the formula for size should hopefully be a bit easier to 
@@ -42,18 +41,13 @@ def coronavirusMap():
     info = requests.get("https://pomber.github.io/covid19/timeseries.json")
     cases = json.loads(info.text)
 
-    countries = []
-
     confirmedCasesList = []
     ratesList = []
+    countries = []
     for case in cases:
         confirmedCasesList.append(cases[case][-1]['confirmed'])
-        ratesList.append(cases[case][-1]['deaths']/cases[case][-1]['confirmed'])
+        ratesList.append(cases[case][-1]['deaths'] / cases[case][-1]['confirmed'])
 
-    print(max(confirmedCasesList))
-    print(max(ratesList))
-
-    for case in cases:
         confirmed = cases[case][-1]['confirmed']
         deaths = cases[case][-1]['deaths']
         recovered = cases[case][-1]['recovered']
