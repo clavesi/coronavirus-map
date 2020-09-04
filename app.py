@@ -71,11 +71,11 @@ def coronavirusMap():
                 population = int(pop[pop.index(case) + 1])
                 percapita = (confirmed / population) * 100000
 
-                smallSize = 10 # Plateau small countries
-                bigSize = -1 / (max(percapitaList) * .01) # Plateau big countries
+                smallSize = 7 # Plateau small countries
+                bigSize = -1 / 200 # Plateau big countries
                 radius = percapita
                 # Sigmoid function to get proper circle radius
-                radius = (1/(1 + smallSize * math.exp(bigSize * radius))) * 250000
+                radius = (max(percapitaList) / (1 + smallSize * math.exp(bigSize * radius))) * 75
 
                 lowMortality = 1/100 # Plateau low mortality rates
                 color = int((deaths / confirmed) * 100)
@@ -85,6 +85,15 @@ def coronavirusMap():
                 color = '#{:02x}{:02x}{:02x}'.format(sigmoid, 0, 0)
 
                 countries.append([lat, lon, case, confirmed, deaths, radius, color, percapita])
+
+    testlist = []
+    for case in cases:
+        testlist.append(case)
+    
+    for count in pop:
+        if pop.index(count) % 2 == 0:
+            if count not in testlist:
+                print(count)
 
     for country in countries:
         popup = folium.Popup(f'{country[2]}:<br>{country[3]} cases,<br>{round(country[7], 2)} per 100k,<br>{country[4]} deaths,<br>{round(country[4]/country[3]*100, 2)}% mortality', max_width=1500)
