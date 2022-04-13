@@ -138,4 +138,4 @@ def graphs():
     info = requests.get("https://pomber.github.io/covid19/timeseries.json")
     covid19 = json.loads(info.text)
 
-    return render_template('graphs.html', data=covid19)
+    return render_template('graphs.html', coviddata=covid19)
