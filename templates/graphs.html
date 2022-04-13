@@ -28,11 +28,7 @@
         </select>
     </div>
 
-    <canvas id="myChart" height="100px" width="250px"></canvas>
-
-    <footer>
-        <a href="https://github.com/clavesi/coronavirus-map">Designed by clavesi</a>
-    </footer>
+    <canvas id="myChart"></canvas>
 
     <script>
         let data = {{ coviddata | tojson }};
@@ -148,7 +144,7 @@
                                     label: {
                                         enabled: true,
                                         content: 'Alpha',
-                                        position: 'top'
+                                        position: 'start'
                                     },
                                     scaleID: 'x',
                                     value: '2020-09-01'
@@ -160,7 +156,7 @@
                                     label: {
                                         enabled: true,
                                         content: 'Beta',
-                                        position: 'top'
+                                        position: 'start'
                                     },
                                     scaleID: 'x',
                                     value: '2020-05-01'
@@ -172,7 +168,7 @@
                                     label: {
                                         enabled: true,
                                         content: 'Gamma',
-                                        position: 'center'
+                                        position: 'start'
                                     },
                                     scaleID: 'x',
                                     value: '2020-11-01'
@@ -184,7 +180,7 @@
                                     label: {
                                         enabled: true,
                                         content: 'Delta',
-                                        position: 'top'
+                                        position: 'start'
                                     },
                                     scaleID: 'x',
                                     value: '2020-10-01'
@@ -196,7 +192,7 @@
                                     label: {
                                         enabled: true,
                                         content: 'Omicron',
-                                        position: 'top'
+                                        position: 'start'
                                     },
                                     scaleID: 'x',
                                     value: '2021-11-01'

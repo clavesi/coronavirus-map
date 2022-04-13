@@ -13,35 +13,18 @@ nav {
     list-style: none;
     width: 100%;
     height: 100%;
-    background: lightcoral;
+    background: #222222;
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
 }
 
 .nav-links li a {
-    color: white;
+    color: #fff;
     text-decoration: none;
     font-size: 5vh;
 }
 
-h1 {
-    text-align: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
 select {
     text-align: center;
-}
-
-footer {
-    height: 8vh;
-    text-align: center;
-}
-
-footer a {
-    color: black;
-    text-decoration: none;
-    font-size: 6vh;
 }
