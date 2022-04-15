@@ -22,8 +22,15 @@
     color: rgba(255, 255, 255, .87);
 }
 
+.flex-grow-1 a:hover {
+    color: rgba(255, 255, 255, .67);
+}
 
 .made-by a {
     text-decoration: none;
     color: rgba(255, 255, 255, .60);
+}
+
+.made-by a:hover {
+    color: rgba(255, 255, 255, .40);
 }
