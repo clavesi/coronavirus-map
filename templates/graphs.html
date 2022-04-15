@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graphs</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.4.0/chartjs-plugin-annotation.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/graphs.css') }}">
 </head>
 
@@ -26,12 +30,8 @@
 
     <canvas id="myChart"></canvas>
 
-    <footer>
-        <a href="https://github.com/clavesi/coronavirus-map">Designed by clavesi</a>
-    </footer>
-
     <script>
-        let data = {{ data | tojson }};
+        let data = {{ coviddata | tojson }};
 
         let select = document.getElementById('countrySelect');
         for (country in data) {
@@ -71,8 +71,7 @@
                 }
             }
 
-            formattedDate = format(zeroedDate)
-            days.push(formattedDate + ' (Day ' + (i + 1).toString() + ')');
+            days.push(zeroedDate);
 
             // Get number of cases worldwide
             casesDaily = 0;
@@ -113,38 +112,93 @@
                     }]
                 },
                 options: {
-                    title: {
-                        display: true,
-                        text: 'Cases'
-                    },
                     elements: {
                         point: {
-                            radius: 2
-                        }
-                    },
-                    tooltips: {
-                        callbacks: {
-                            label: function (tooltipItem, data) {
-                                var value = data.datasets[0].data[tooltipItem.index];
-                                value = value.toString();
-                                value = value.split(/(?=(?:...)*$)/);
-                                value = value.join(',');
-                                return value;
-                            }
+                            radius: 1
                         }
                     },
                     scales: {
-                        yAxes: [{
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'month'
+                            },
+                            min: '2020-01-22',
                             ticks: {
-                                beginAtZero: true,
-                                userCallback: function (value, index, values) {
-                                    value = value.toString();
-                                    value = value.split(/(?=(?:...)*$)/);
-                                    value = value.join(',');
-                                    return value;
+                                autoSkip: true,
+                                minTicksLimit: 20,
+                                maxTicksLimit: 20,
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        annotation: {
+                            annotations: {
+                                Alpha: {
+                                    type: 'line',
+                                    borderColor: 'black',
+                                    borderWidth: 3,
+                                    label: {
+                                        enabled: true,
+                                        content: 'Alpha',
+                                        position: 'start'
+                                    },
+                                    scaleID: 'x',
+                                    value: '2020-09-01'
+                                },
+                                Beta: {
+                                    type: 'line',
+                                    borderColor: 'black',
+                                    borderWidth: 3,
+                                    label: {
+                                        enabled: true,
+                                        content: 'Beta',
+                                        position: 'start'
+                                    },
+                                    scaleID: 'x',
+                                    value: '2020-05-01'
+                                },
+                                Gamma: {
+                                    type: 'line',
+                                    borderColor: 'black',
+                                    borderWidth: 3,
+                                    label: {
+                                        enabled: true,
+                                        content: 'Gamma',
+                                        position: 'start'
+                                    },
+                                    scaleID: 'x',
+                                    value: '2020-11-01'
+                                },
+                                Delta: {
+                                    type: 'line',
+                                    borderColor: 'red',
+                                    borderWidth: 3,
+                                    label: {
+                                        enabled: true,
+                                        content: 'Delta',
+                                        position: 'start'
+                                    },
+                                    scaleID: 'x',
+                                    value: '2020-10-01'
+                                },
+                                Omicron: {
+                                    type: 'line',
+                                    borderColor: 'red',
+                                    borderWidth: 3,
+                                    label: {
+                                        enabled: true,
+                                        content: 'Omicron',
+                                        position: 'start'
+                                    },
+                                    scaleID: 'x',
+                                    value: '2021-11-01'
                                 }
                             }
-                        }]
+                        }
                     }
                 },
             });
