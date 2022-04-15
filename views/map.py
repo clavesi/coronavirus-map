@@ -50,7 +50,6 @@ def map():
     for case in cases:
         confirmed = cases[case][-1]['confirmed']
         deaths = cases[case][-1]['deaths']
-        recovered = cases[case][-1]['recovered']
 
         if case in latlon:
             if not confirmed == 0:
@@ -59,20 +58,12 @@ def map():
                 population = int(pop[pop.index(case) + 1])
                 percapita = (confirmed / population) * 100000
 
-                smallSize = 7  # Plateau small countries
-                bigSize = -1 / 200  # Plateau big countries
-                radius = percapita
-                # Sigmoid function to get proper circle radius
-                radius = (max(percapitaList) / (1 + smallSize *
-                                                math.exp(bigSize * radius))) * 75
+                radius = math.sqrt(max(percapitaList) * percapita) * 4
 
-                lowMortality = 1/100  # Plateau low mortality rates
                 color = int((deaths / confirmed) * 100)
-                # Sigmoid function to get a red RGB value
-                sigmoid = int(
-                    (1/(1 + lowMortality * math.exp(-1/7 * color + 6))) * 255)
+                sqrtfunc = int(math.sqrt(2048 * color))
                 # Convert red RGB to hex
-                color = '#{:02x}{:02x}{:02x}'.format(sigmoid, 0, 0)
+                color = '#{:02x}{:02x}{:02x}'.format(sqrtfunc, 0, 0)
 
                 countries.append([lat, lon, case, confirmed,
                                   deaths, radius, color, percapita])
