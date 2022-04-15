@@ -1,7 +1,5 @@
 import views.map as map
 import views.graphs as graphs
-import requests
-import json
 from flask import Flask, render_template
 
 '''
