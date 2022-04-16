@@ -7,6 +7,10 @@ from flask import render_template
 
 
 def map():
+    """
+    It reads a JSON file, a CSV file, and a CSV file, and then creates a map with circles on it.
+    :return: The map.html file is being returned.
+    """
     m = folium.Map(
         location=[0, 0],
         tiles='OpenStreetMap',
@@ -14,6 +18,7 @@ def map():
         height="95%",
     )
 
+    # Reading a CSV file and appending the data to a list.
     latlon = []
     with open('natlatlon.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -22,6 +27,7 @@ def map():
             latlon.append(row['Latitude'])
             latlon.append(row['Longitude'])
 
+    # Reading a CSV file and appending the data to a list.
     pop = []
     with open('natpop2020.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -29,17 +35,20 @@ def map():
             pop.append(row['Country'])
             pop.append(row['Population'])
 
+    # Getting the data from the website and loading it into a JSON file.
     info = requests.get("https://pomber.github.io/covid19/timeseries.json")
     cases = json.loads(info.text)
 
+    # Creating empty lists.
     confirmedCasesList = []
     ratesList = []
     percapitaList = []
     countries = []
 
-    # This is separate because the second loop requires the max
-    # value of the list in this loop
+    # Creating a list of confirmed cases, a list of death rates, and a list of per capita cases.
     for case in cases:
+        # This is separate because the second loop requires the max
+        # value of the list in this loop
         confirmedCasesList.append(cases[case][-1]['confirmed'])
         ratesList.append(cases[case][-1]['deaths'] /
                          cases[case][-1]['confirmed'])
@@ -47,6 +56,8 @@ def map():
             percapitaList.append(
                 (cases[case][-1]['confirmed'] / int(pop[pop.index(case) + 1])) * 100000)
 
+    # Creating a list of countries, their latitudes, longitudes, confirmed cases, deaths, radius,
+    # color, and per capita cases.
     for case in cases:
         confirmed = cases[case][-1]['confirmed']
         deaths = cases[case][-1]['deaths']
@@ -68,15 +79,7 @@ def map():
                 countries.append([lat, lon, case, confirmed,
                                   deaths, radius, color, percapita])
 
-    testlist = []
-    for case in cases:
-        testlist.append(case)
-
-    for count in pop:
-        if pop.index(count) % 2 == 0:
-            if count not in testlist:
-                print(count)
-
+    # Creating a popup for each country and adding a circle to the map.
     for country in countries:
         popup = folium.Popup(
             f'{country[2]}:<br>{country[3]} cases,<br>{round(country[7], 2)} per 100k,<br>{country[4]} deaths,<br>{round(country[4]/country[3]*100, 2)}% mortality', max_width=1500)
@@ -91,7 +94,7 @@ def map():
         ).add_to(m)
     m.save(outfile='templates/map.html')
 
-    # Read map.html and save a variable that has the header added
+    # Read map.html and save a variable that has the navbar added
     f = open("templates/map.html", "r")
     text = f.read()
     if '<body>' in text:
