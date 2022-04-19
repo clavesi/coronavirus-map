@@ -14,6 +14,21 @@ def map():
         height="95%",
     )
 
+    # Folium auto imports Bootstrap 3, but
+    # the navbar uses Bootstrap 5, so change what it uses
+    m.default_css = [
+        ('leaflet_css', 'https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css'),
+        ('bootstrap_css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'),
+        ('awesome_markers_css', 'https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css'),
+        ('awesome_rotate_css', 'https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css')
+    ]
+    m.default_js = [
+        ('leaflet', 'https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js'),
+        ('jquery', 'https://code.jquery.com/jquery-1.12.4.min.js'),
+        ('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js'),
+        ('awesome_markers', 'https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js')
+    ]
+
     latlon = []
     with open('natlatlon.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -97,20 +112,37 @@ def map():
     if '<body>' in text:
         bodyIndex = text.index('<body>') + 6
         htmlText = '''
-                    <nav>
-                        <ul class="nav-links">
-                            <li><a href="/">Visualize COVID-19</a></li>
-                            <li><a href="/map">Map</a></li>
-                            <li><a href="/graphs">Graphs</a></li>
-                        </ul>
+                    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #222222;">
+                        <div class="container-fluid">
+                            <a class="navbar-brand" href="/">
+                                <img src="https://www.pfma.org/uploads/1/3/2/9/132961961/published/covid-icon-red-no-background.png?1616616356"
+                                    alt="" width="30" height="30" class="d-inline-block align-text-top">Visualize COVID-19</a>
+                            <button class="navbar-toggler ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse" id="collapseNavbar">
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="/map">Map</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/graphs">Graphs</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="https://github.com/clavesi/coronavirus-map">GitHub</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </nav>
                     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/map.css') }}">
+                    </script>
                     '''
         finalText = text[:bodyIndex] + htmlText + text[bodyIndex:]
     f.close()
 
     # Write variable to file
-    f = open("templates/map.html", "w")
+    f = open("templates/map.html", "w+")
     f.write(finalText)
     f.close()
 
