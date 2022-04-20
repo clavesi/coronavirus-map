@@ -20,7 +20,9 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="https://www.pfma.org/uploads/1/3/2/9/132961961/published/covid-icon-red-no-background.png?1616616356"
-                    alt="" width="30" height="30" class="d-inline-block align-text-top">Visualize COVID-19</a>
+                    alt="" width="30" height="30" class="d-inline-block align-text-top">
+                Visualize COVID-19
+            </a>
             <button class="navbar-toggler ml-auto" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -41,13 +43,17 @@
         </div>
     </nav>
 
-    <div class="selection" align="center">
-        <select id='countrySelect' onchange="changeDataset()">
-            <option value="Worldwide" selected>Worldwide</option>
-        </select>
+    <div class="container">
+        <div class="selection row justify-content-lg-center">
+            <select class="form-select form-select-sm" id="countrySelect" onchange="changeDataset()">
+                <option value="Worldwide" selected>Worldwide</option>
+            </select>
+        </div>
     </div>
 
-    <canvas id="myChart"></canvas>
+    <div class="container">
+        <canvas id="chart"></canvas>
+    </div>
 
     <script>
         let data = {{ coviddata | tojson }};
@@ -100,21 +106,21 @@
             cases.push(casesDaily);
         }
 
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = chartTemplate(cases);
+        var ctx = document.getElementById('chart').getContext('2d');
+        var chart = chartTemplate(cases);
 
         function changeDataset() {
-            myChart.destroy();
+            chart.destroy();
 
             if (select.value !== 'Worldwide') {
                 const countryCases = []
                 for (i = 0; i < data[select.value].length; i++) {
                     countryCases.push(data[select.value][i]['confirmed']);
                 }
-                myChart = chartTemplate(countryCases);
+                chart = chartTemplate(countryCases);
             }
             else {
-                myChart = chartTemplate(cases);
+                chart = chartTemplate(cases);
             }
         }
 

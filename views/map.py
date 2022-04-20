@@ -118,8 +118,11 @@ def map():
                         <div class="container-fluid">
                             <a class="navbar-brand" href="/">
                                 <img src="https://www.pfma.org/uploads/1/3/2/9/132961961/published/covid-icon-red-no-background.png?1616616356"
-                                    alt="" width="30" height="30" class="d-inline-block align-text-top">Visualize COVID-19</a>
-                            <button class="navbar-toggler ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+                                    alt="" width="30" height="30" class="d-inline-block align-text-top">
+                                Visualize COVID-19
+                            </a>
+                            <button class="navbar-toggler ml-auto" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseNavbar">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="navbar-collapse collapse" id="collapseNavbar">
