@@ -1,37 +1,36 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+.container-fluid {
+    height: 100vh;
 }
 
-nav {
-    height: 92vh;
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    width: 100%;
+.col {
     height: 100%;
-    background: #222222;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
 }
 
-.nav-links li a {
-    color: #fff;
+.row {
+    font-family: 'Roboto', sans-serif;
+}
+
+.flex-grow-1 {
+    background-color: #121212;
+    color: rgba(255, 255, 255, .87);
+}
+
+.flex-grow-1 a {
     text-decoration: none;
-    font-size: 36px;
+    color: rgba(255, 255, 255, .87);
 }
 
-footer {
-    height: 8vh;
-    text-align: center;
+.flex-grow-1 a:hover {
+    color: rgba(255, 255, 255, .67);
 }
 
-footer a {
-    color: black;
+.made-by a {
     text-decoration: none;
-    font-size: 6vh;
+    color: rgba(255, 255, 255, .60);
+}
+
+.made-by a:hover {
+    color: rgba(255, 255, 255, .40);
 }
