@@ -1,3 +1,4 @@
+from cmath import log
 import folium
 import requests
 import json
@@ -95,8 +96,14 @@ def map():
 
     # Creating a popup for each country and adding a circle to the map.
     for country in countries:
+        # Formatting the numbers to have commas.
+        confirmed = "{:,}".format(country[3])
+        deaths = "{:,}".format(country[4])
+        percapita = "{:,}".format(int(country[7]))
+        mortality = "{:,}".format(round(country[4]/country[3]*100, 2))
+
         popup = folium.Popup(
-            f'{country[2]}:<br>{country[3]} cases,<br>{round(country[7], 2)} per 100k,<br>{country[4]} deaths,<br>{round(country[4]/country[3]*100, 2)}% mortality', max_width=1500)
+            f'{country[2]}:<br>{confirmed} cases,<br>{percapita} per 100k,<br>{deaths} deaths,<br>{mortality}% mortality', max_width=1500)
         circle = folium.Circle(
             location=[country[0], country[1]],
             radius=country[5],
