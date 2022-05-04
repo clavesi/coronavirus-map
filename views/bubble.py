@@ -1,4 +1,3 @@
-from cmath import log
 import folium
 import requests
 import json
@@ -7,7 +6,7 @@ import math
 from flask import render_template
 
 
-def map():
+def bubble():
     """
     It reads a JSON file, a CSV file, and a CSV file, and then creates a map with circles on it.
     :return: The map.html file is being returned.
@@ -16,7 +15,7 @@ def map():
         location=[0, 0],
         tiles='OpenStreetMap',
         zoom_start=2,
-        height="95%",
+        height="94%",
     )
 
     # Folium auto imports Bootstrap 3, but
@@ -35,7 +34,7 @@ def map():
     ]
 
     latlon = []
-    with open('natlatlon.csv', newline='') as csvfile:
+    with open('./data/natlatlon.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             latlon.append(row['Country'])
@@ -44,7 +43,7 @@ def map():
 
     # Reading a CSV file and appending the data to a list.
     pop = []
-    with open('natpop2020.csv', newline='') as csvfile:
+    with open('./data/natpop2020.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             pop.append(row['Country'])
@@ -104,7 +103,7 @@ def map():
 
         popup = folium.Popup(
             f'{country[2]}:<br>{confirmed} cases,<br>{percapita} per 100k,<br>{deaths} deaths,<br>{mortality}% mortality', max_width=1500)
-        circle = folium.Circle(
+        folium.Circle(
             location=[country[0], country[1]],
             radius=country[5],
             popup=popup,
@@ -135,7 +134,10 @@ def map():
                             <div class="navbar-collapse collapse" id="collapseNavbar">
                                 <ul class="navbar-nav ms-auto">
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="/map">Map</a>
+                                        <a class="nav-link" href="/bubble">Bubble</a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="/choropleth">Choropleth</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="/graphs">Graphs</a>
@@ -147,7 +149,7 @@ def map():
                             </div>
                         </div>
                     </nav>
-                    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/map.css') }}">
+                    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/navbar.css') }}">
                     </script>
                     '''
         finalText = text[:bodyIndex] + htmlText + text[bodyIndex:]

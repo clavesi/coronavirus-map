@@ -2,6 +2,7 @@ import requests
 import json
 from flask import render_template
 
+
 def graphs():
     """
     It takes the data from the URL, loads it into a variable, and then passes it to the template
