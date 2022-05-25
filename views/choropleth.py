@@ -17,7 +17,6 @@ def choropleth():
     m.default_js = [
         ('leaflet', 'https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js'),
         ('jquery', 'https://code.jquery.com/jquery-1.12.4.min.js'),
-        ('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js'),
         ('awesome_markers', 'https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js')
     ]
 
@@ -76,6 +75,9 @@ def choropleth():
                     </nav>
                     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/navbar.css') }}">
                     </script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
                     '''
         finalText = text[:bodyIndex] + htmlText + text[bodyIndex:]
     f.close()
