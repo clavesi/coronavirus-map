@@ -1,5 +1,5 @@
 folium==0.10.1
 requests==2.23.0
 Flask==1.0.2
-pandas==1.4.2
+pandas
 gunicorn==20.0.4
