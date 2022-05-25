@@ -16,6 +16,7 @@ def choropleth():
     ]
     m.default_js = [
         ('leaflet', 'https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js'),
+        ('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js'),
         ('jquery', 'https://code.jquery.com/jquery-1.12.4.min.js'),
         ('awesome_markers', 'https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js')
     ]
