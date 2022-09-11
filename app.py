@@ -11,9 +11,9 @@ def index():
     return render_template('index.html')
 
 
-app.add_url_rule('/bubble', view_func=bubble.bubble)
-app.add_url_rule('/choropleth', view_func=choropleth.choropleth)
-app.add_url_rule('/graphs', view_func=graphs.graphs)
+app.add_url_rule('/bubble.html', view_func=bubble.bubble)
+app.add_url_rule('/choropleth.html', view_func=choropleth.choropleth)
+app.add_url_rule('/graphs.html', view_func=graphs.graphs)
 
 
 if __name__ == '__main__':
